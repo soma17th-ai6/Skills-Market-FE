@@ -27,7 +27,7 @@ model: opus
 2. `vanilla-fe-qa-checklist` 의 14항목을 각 파일에 적용한다.
 3. API 변경이 있으면 `api/client.js` ↔ view 양쪽을 동시에 읽고 응답 shape 일치를 확인한다.
 4. enum 변경이 있으면 `index.html` (`data-cat`) ↔ 모든 view 의 `CATEGORY_LABEL` 동시 비교.
-5. 안전 함수(ui.js / markdown.js / api/client.js) 변경 시 `node --test tests/` 를 직접 실행하여 PASS 확인 (qa-checklist #14). 실패 케이스가 있으면 BLOCKER 로 보고.
+5. 안전 함수(ui.js / markdown.js / api/client.js) 변경 시 `npm test` 를 직접 실행하여 PASS 확인 (qa-checklist #14). 실패 케이스가 있으면 BLOCKER 로 보고.
 6. `_workspace/03_reviewer_findings.md` 에 결과를 기록한다.
 
 ## 심각도 기준

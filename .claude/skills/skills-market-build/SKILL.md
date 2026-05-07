@@ -44,12 +44,12 @@ TeamCreate 로 3명 팀 생성:
   - 실제 src/ / styles/ / index.html 변경
   - 안전 함수(ui.js / markdown.js / api/client.js) 변경 시 `tests/` 의 대응 테스트 동반 작성/갱신
   - `_workspace/02_implementer_report.md` (변경 파일 목록 + 9개 자체 체크 결과 + 테스트 PASS 여부)
-- 검증: 자체 체크 9항목 PASS 표기 확인. 안전 함수 변경 시 `node --test tests/` 결과 첨부 확인.
+- 검증: 자체 체크 9항목 PASS 표기 확인. 안전 함수 변경 시 `npm test` 결과 첨부 확인.
 
 ## Phase 4: 검증 (reviewer)
 - TaskCreate (blockedBy: Phase 3): "qa-checklist 14항목 점검 + 테스트 실행", owner: fe-reviewer
 - 산출물: `_workspace/03_reviewer_findings.md`
-- 안전 함수 변경 시 reviewer 가 직접 `node --test tests/` 실행하여 PASS 재확인.
+- 안전 함수 변경 시 reviewer 가 직접 `npm test` 실행하여 PASS 재확인.
 - 분기:
   - BLOCKER 0건 + 테스트 PASS → Phase 5 (PASS)
   - BLOCKER 있음 또는 테스트 FAIL → Phase 3 재실행 (implementer 에게 finding 전달, 1회만)

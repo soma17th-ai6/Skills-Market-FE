@@ -81,7 +81,7 @@ reference 코드(`ai교육/frontend`)에서 추출한 13개 함정. fe-reviewer 
 - **검증**:
   - `src/lib/ui.js` (escapeHtml) / `src/lib/markdown.js` (renderMarkdown, safeUrl) / `src/api/client.js` (request, ApiError, NetworkError) 가 변경됐는지 확인.
   - 변경됐다면 `tests/` 의 대응 테스트(`tests/lib/ui.test.js` 등) 가 함께 갱신됐는지.
-  - `node --test tests/` 가 PASS 하는지 직접 실행하여 확인.
+  - `npm test` 가 PASS 하는지 직접 실행하여 확인.
 - **반례 1**: escapeHtml 에 새 escape 케이스를 추가했지만 테스트는 그대로 → 회귀 시 침묵 실패.
 - **반례 2**: renderMarkdown 에 테이블 패턴을 추가했지만 `<script>` 입력 회귀 테스트가 없음.
 - **테스트 자체가 없는 안전 함수**: BLOCKER. implementer 에게 테스트 작성 요청.

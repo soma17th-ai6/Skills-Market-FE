@@ -176,21 +176,21 @@ package.json                # { "type": "module" }  ← ESM import 활성화
 ```json
 {
   "name": "skills-market-fe",
-  "type": "module",
+  "version": "0.1.0",
   "private": true,
-  "scripts": { "test": "node --test tests/" }
+  "type": "module",
+  "scripts": { "test": "node --test" }
 }
 ```
+- `node --test` (인자 없음) 은 CWD 부터 기본 패턴(`**/*.test.js`, `tests/**/*.js` 등) 으로 자동 스캔. 명시 경로(`node --test tests/`) 는 비-ASCII 경로(한글 등) 에서 모듈 해석 실패 사례 있음.
 
 ### 실행
 ```bash
-node --test tests/
-# 또는
 npm test
 ```
 - node 22+ 권장 (안정 reporter, mock 모듈).
 - node 18~20 도 동작하지만 출력 포맷 다름.
-- CI 통합은 사용자 결정. 기본은 사람이 수동 실행.
+- CI 통합: `.github/workflows/test.yml` (push/PR to main 트리거).
 
 ### 작성 패턴 — 순수 함수
 ```js

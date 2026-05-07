@@ -82,4 +82,5 @@
 |---|---|---|---|
 | 2026-05-08 | 초기 구성 | 전체 | 신규 하네스 구축 |
 | 2026-05-08 | 안전 함수 단위 테스트 통합 | patterns §16 / qa-checklist #14 / implementer / reviewer / orchestrator | XSS 회귀 차단을 reviewer 정적 점검에만 의존하지 않기 위해 node:test 도입 |
+| 2026-05-08 | CI + smoke 테스트 추가, npm test 표기 통일 | .github/workflows/test.yml / tests/smoke.test.js / patterns §16 / 관련 5개 파일 | 머지 전 자동 검증 + 한글 경로에서 `node --test tests/` 가 모듈 해석 실패하는 이슈 회피 |
 

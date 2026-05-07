@@ -29,7 +29,7 @@ model: opus
 6. 카드/버튼은 `tabindex="0"` + `role="button"` + `aria-label` 이 있는가?
 7. 클릭 + Enter/Space 키보드 핸들러가 모두 있는가?
 8. 모달 ESC 핸들러는 add/remove 페어링이 되어 있는가?
-9. 안전 함수(`escapeHtml`, `safeUrl`, `renderMarkdown`, `request` 의 에러 분기) 를 변경했다면 `tests/` 의 대응 테스트도 갱신했고 `node --test tests/` 가 PASS 하는가? (vanilla-fe-patterns §16)
+9. 안전 함수(`escapeHtml`, `safeUrl`, `renderMarkdown`, `request` 의 에러 분기) 를 변경했다면 `tests/` 의 대응 테스트도 갱신했고 `npm test` 가 PASS 하는가? (vanilla-fe-patterns §16)
 
 9개 모두 OK 가 아니면 reviewer 에게 넘기지 않는다.
 
