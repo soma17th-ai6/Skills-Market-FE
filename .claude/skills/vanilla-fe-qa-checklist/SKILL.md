@@ -5,7 +5,7 @@ description: "fe-reviewer 가 implementer 산출물을 검증할 때 쓰는 13�
 
 # vanilla-fe-qa-checklist — Vanilla JS FE 검증 체크리스트
 
-reference 코드(`ai교육/frontend`)에서 추출한 13개 함정. fe-reviewer 가 변경 파일을 항목별로 훑는다. 각 항목은 (검증 방법) + (반례) + (심각도 기본값) 으로 구성.
+reference 코드(외부 vanilla JS SPA)에서 추출한 13개 함정. fe-reviewer 가 변경 파일을 항목별로 훑는다. 각 항목은 (검증 방법) + (반례) + (심각도 기본값) 으로 구성. (참고: qa-checklist 는 본 파일 #14 까지 14개 항목.)
 
 ## 검증 원칙
 - **경계면 교차 비교**: 한 파일만 보지 말고 호출 관계가 있는 두 파일을 동시에 비교.

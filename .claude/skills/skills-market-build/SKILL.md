@@ -5,7 +5,7 @@ description: "Skills-Market FE 의 새 기능 구현 / 기존 기능 수정 / �
 
 # skills-market-build — Skills-Market FE 빌드 오케스트레이터
 
-vanilla JS ESM 마켓플레이스 SPA 작업을 3-에이전트 팀(architect / implementer / reviewer) 으로 조율한다. reference: `ai교육/frontend/`.
+vanilla JS ESM 마켓플레이스 SPA 작업을 3-에이전트 팀(architect / implementer / reviewer) 으로 조율한다. reference 구현(동일 구조의 외부 vanilla JS SPA)이 있다면 사용자가 세션 시작 시 경로를 알려준다.
 
 ## Phase 0: 컨텍스트 확인
 시작 전 `_workspace/` 존재 여부와 사용자 의도를 판별한다.

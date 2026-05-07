@@ -5,7 +5,7 @@ description: "Skills-Market FE 의 vanilla JS ESM 패턴 카탈로그. escapeHtm
 
 # vanilla-fe-patterns — Skills-Market FE 패턴 카탈로그
 
-빌드 도구 없는 vanilla JS ESM 환경에서 reference 코드(`ai교육/frontend/src/`)가 합의한 패턴들. 모든 에이전트가 이 카탈로그를 기준으로 작업한다. 새 패턴이 필요하면 추가하기 전 기존 패턴 조합을 먼저 시도한다.
+빌드 도구 없는 vanilla JS ESM 환경에서 reference 코드(사용자가 세션 시작 시 경로를 알려주는 외부 vanilla JS SPA)가 합의한 패턴들. 모든 에이전트가 이 카탈로그를 기준으로 작업한다. 새 패턴이 필요하면 추가하기 전 기존 패턴 조합을 먼저 시도한다.
 
 ## 1. ESM import 규칙
 빌드 도구가 없으므로 브라우저 ESM 사양을 그대로 따른다.

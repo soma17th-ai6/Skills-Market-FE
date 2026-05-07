@@ -75,7 +75,7 @@
 
 **트리거:** view 추가 / 기능 구현 / 버그 수정 / 리팩토링 요청 시 `skills-market-build` 스킬을 사용한다. 단순 질문 / 백엔드 작업 / 단순 CSS 작업은 직접 응답.
 
-**참고:** reference 구현은 `C:\Users\박\Desktop\hi\ai교육\frontend` 에 있음. 패턴/함정 도출의 원천.
+**참고:** reference 구현(동일 구조의 vanilla JS ESM SPA)을 로컬에 별도 보유. 패턴/함정 도출의 원천 — 세션 시작 시 사용자가 경로를 알려주면 architect/implementer 가 그걸 읽어 사용한다.
 
 **변경 이력:**
 | 날짜 | 변경 내용 | 대상 | 사유 |
@@ -83,4 +83,5 @@
 | 2026-05-08 | 초기 구성 | 전체 | 신규 하네스 구축 |
 | 2026-05-08 | 안전 함수 단위 테스트 통합 | patterns §16 / qa-checklist #14 / implementer / reviewer / orchestrator | XSS 회귀 차단을 reviewer 정적 점검에만 의존하지 않기 위해 node:test 도입 |
 | 2026-05-08 | CI + smoke 테스트 추가, npm test 표기 통일 | .github/workflows/test.yml / tests/smoke.test.js / patterns §16 / 관련 5개 파일 | 머지 전 자동 검증 + 한글 경로에서 `node --test tests/` 가 모듈 해석 실패하는 이슈 회피 |
+| 2026-05-08 | 로컬 절대 경로 / 학습 컨텍스트 표기 제거 | CLAUDE.md / 하네스 4개 파일 | repo 공개 시 개인정보(성씨) 노출 + 다른 머신 이식 불가 — reference 경로는 세션 시작 시 사용자가 전달하는 방식으로 변경 |
 

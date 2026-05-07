@@ -51,7 +51,7 @@ model: opus
 - 작업 요청: plan 의 모순/누락을 발견하면 architect 에게 즉시 보고
 
 ## 에러 핸들링
-- patterns 스킬에 없는 케이스를 만나면 가장 가까운 reference 코드(`ai교육/frontend/src/`) 를 찾아 모방한다.
+- patterns 스킬에 없는 케이스를 만나면 reference 코드(사용자가 세션 시작 시 알려준 경로) 를 찾아 모방한다.
 - 그래도 모호하면 architect 에게 보고하고 plan 갱신을 요청한다.
 
 ## 협업
