@@ -78,7 +78,15 @@ function renderSkills(skills) {
   }
   empty.hidden = true;
   empty.textContent = '';
-  grid.innerHTML = skills.map(renderCard).join('');
+  // 한 줄에 3개씩 채워 보이도록 — 모자란 자리는 빈 placeholder 로 채운다.
+  const cards = skills.map(renderCard).join('');
+  const remainder = skills.length % 3;
+  const placeholders = remainder === 0
+    ? ''
+    : Array.from({ length: 3 - remainder }, () =>
+        '<div class="skill-placeholder" aria-hidden="true"></div>'
+      ).join('');
+  grid.innerHTML = cards + placeholders;
 }
 
 export async function loadCategory(category) {
