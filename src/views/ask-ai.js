@@ -30,17 +30,28 @@ function renderResults(query, skills) {
   if (!r) return;
 
   const queryLine = `<div class="intent-q">QUERY → <span>"${escapeHtml(query)}"</span></div>`;
+  const hasResults = Array.isArray(skills) && skills.length > 0;
 
-  if (!skills || skills.length === 0) {
+  if (!hasResults) {
     r.innerHTML =
       queryLine +
       '<div class="intent-empty">매칭 점수 50% 이상의 스킬을 찾지 못했습니다. 쿼리를 다시 적어보세요.</div>';
-    r.classList.add('show');
-    return;
+  } else {
+    r.innerHTML = queryLine + skills.map(renderMatch).join('');
   }
-
-  r.innerHTML = queryLine + skills.map(renderMatch).join('');
   r.classList.add('show');
+
+  // hero stats: 마지막 매칭 점수 (= 결과 배열의 마지막 항목, 없으면 '—').
+  const stat = document.getElementById('stat-accuracy');
+  if (stat) {
+    if (hasResults) {
+      const last = skills[skills.length - 1];
+      const pct = Math.max(0, Math.min(100, Number(last.percentage) || 0));
+      stat.textContent = `${pct}%`;
+    } else {
+      stat.textContent = '—';
+    }
+  }
 }
 
 function renderError(query, message) {

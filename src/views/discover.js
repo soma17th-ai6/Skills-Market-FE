@@ -72,7 +72,13 @@ function renderSkills(skills) {
   const grid = $('#skill-grid');
   const empty = $('#skill-grid-empty');
   if (!grid || !empty) return;
-  if (!skills || skills.length === 0) {
+
+  // hero stats: 현재 카테고리에 보이는 카드 수 (in view).
+  const total = (skills || []).length;
+  const stat = document.getElementById('stat-total');
+  if (stat) stat.textContent = String(total);
+
+  if (total === 0) {
     renderEmptyMessage('이 카테고리에 등록된 스킬이 없습니다');
     return;
   }

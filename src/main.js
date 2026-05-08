@@ -15,6 +15,10 @@ function boot() {
   bindAskAi();
   bindModalDismiss();
   attachReveal($$('section, .hero'));
+  // hero stats 의 tech stacks 는 카테고리 칩 개수에서 자동 계산 (drift 방지).
+  const stacks = $$('#category-chips .chip').length;
+  const stacksEl = document.getElementById('stat-stacks');
+  if (stacksEl) stacksEl.textContent = String(stacks);
   // BE 가 category 를 필수로 요구하므로 첫 칩(Spring Boot) 을 기본 활성화.
   loadCategory('SPRING_BOOT');
 }
