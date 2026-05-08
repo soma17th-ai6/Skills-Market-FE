@@ -34,27 +34,17 @@ test('ApiError on 500 with empty body', async () => {
   );
 });
 
-test('getSkills with no category omits query param', async () => {
-  let capturedUrl = null;
-  globalThis.fetch = mock.fn((url) => {
-    capturedUrl = url;
-    return Promise.resolve(jsonResponse({ skills: [] }));
-  });
-  await getSkills();
-  assert.match(capturedUrl, /\/skills$/);
+test('ApiError code fallback to UNKNOWN when payload has no code (Spring 기본 응답)', async () => {
+  globalThis.fetch = mock.fn(() =>
+    Promise.resolve(jsonResponse({ timestamp: '2026-05-09', status: 400, error: 'Bad Request', message: 'oops' }, 400))
+  );
+  await assert.rejects(
+    () => getSkill('x'),
+    (e) => e instanceof ApiError && e.code === 'UNKNOWN' && e.message === 'oops'
+  );
 });
 
-test('getSkills with "all" omits query param', async () => {
-  let capturedUrl = null;
-  globalThis.fetch = mock.fn((url) => {
-    capturedUrl = url;
-    return Promise.resolve(jsonResponse({ skills: [] }));
-  });
-  await getSkills('all');
-  assert.match(capturedUrl, /\/skills$/);
-});
-
-test('getSkills with enum value passes category', async () => {
+test('getSkills with SPRING_BOOT enum value', async () => {
   let capturedUrl = null;
   globalThis.fetch = mock.fn((url) => {
     capturedUrl = url;
@@ -64,12 +54,32 @@ test('getSkills with enum value passes category', async () => {
   assert.match(capturedUrl, /\/skills\?category=SPRING_BOOT$/);
 });
 
-test('recommend encodes query string', async () => {
+test('getSkills with DEVOPS preserves UPPER_SNAKE casing', async () => {
+  let capturedUrl = null;
+  globalThis.fetch = mock.fn((url) => {
+    capturedUrl = url;
+    return Promise.resolve(jsonResponse({ skills: [] }));
+  });
+  await getSkills('DEVOPS');
+  assert.match(capturedUrl, /\/skills\?category=DEVOPS$/);
+});
+
+test('getSkills with DATA preserves UPPER_SNAKE casing', async () => {
+  let capturedUrl = null;
+  globalThis.fetch = mock.fn((url) => {
+    capturedUrl = url;
+    return Promise.resolve(jsonResponse({ skills: [] }));
+  });
+  await getSkills('DATA');
+  assert.match(capturedUrl, /\/skills\?category=DATA$/);
+});
+
+test('recommend hits singular path /skills/recommendation', async () => {
   let capturedUrl = null;
   globalThis.fetch = mock.fn((url) => {
     capturedUrl = url;
     return Promise.resolve(jsonResponse({ skills: [] }));
   });
   await recommend('hello world');
-  assert.match(capturedUrl, /\/skills\/recommendations\?query=hello%20world$/);
+  assert.match(capturedUrl, /\/skills\/recommendation\?query=hello%20world$/);
 });

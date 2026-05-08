@@ -41,9 +41,12 @@ reference 코드(외부 vanilla JS SPA)에서 추출한 13개 함정. fe-reviewe
 
 ## 5. 카테고리 enum drift [BLOCKER]
 - **검증**:
-  - `index.html` 의 `data-cat` 값 ↔ `views/discover.js` 의 `CATEGORY_LABEL` 키 ↔ `views/skill-detail.js` 의 `CATEGORY_LABEL` 키 모두 동일 enum 집합인지 비교.
-  - 새 카테고리 추가 시 세 위치 모두 갱신되었는지.
-- **반례**: 한쪽에 `MOBILE` 추가됐지만 다른 쪽에 없음 → 라벨 미표시 또는 fetch 실패.
+  - `index.html` 의 `data-cat` 값 ↔ `views/discover.js` 의 `CATEGORY_LABEL` 키 ↔ `views/skill-detail.js` 의 `CATEGORY_LABEL` 키 ↔ BE `SkillCategory.java` 의 enum 값 모두 동일 집합인지 비교.
+  - 모든 enum 은 UPPER_SNAKE (BE 가 진실의 원천).
+  - 새 카테고리 추가 시 네 위치 모두 갱신되었는지.
+- **현재 합의된 enum**: `SPRING_BOOT`, `REACT`, `DEVOPS`, `DATA`, `ETC`.
+- **반례 (실제 사고)**: FE 가 `DevOps`/`Data` (PascalCase) 보냄 → BE `DEVOPS`/`DATA` Java enum 매칭 실패 → 400. 2026-05-09 통합 시도 시 발견되어 정렬됨.
+- **반례 (가상)**: 한쪽에 `MOBILE` 추가됐지만 다른 쪽에 없음 → 라벨 미표시 또는 fetch 실패.
 
 ## 6. ESM .js 확장자 누락 [BLOCKER]
 - **검증**: 모든 `import ... from '...'` 의 경로 끝에 `.js` 가 있는지 grep.

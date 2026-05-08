@@ -30,17 +30,28 @@ function renderResults(query, skills) {
   if (!r) return;
 
   const queryLine = `<div class="intent-q">QUERY → <span>"${escapeHtml(query)}"</span></div>`;
+  const hasResults = Array.isArray(skills) && skills.length > 0;
 
-  if (!skills || skills.length === 0) {
+  if (!hasResults) {
     r.innerHTML =
       queryLine +
       '<div class="intent-empty">매칭 점수 50% 이상의 스킬을 찾지 못했습니다. 쿼리를 다시 적어보세요.</div>';
-    r.classList.add('show');
-    return;
+  } else {
+    r.innerHTML = queryLine + skills.map(renderMatch).join('');
   }
-
-  r.innerHTML = queryLine + skills.map(renderMatch).join('');
   r.classList.add('show');
+
+  // hero stats: 마지막 매칭 점수 (= 결과 배열의 마지막 항목, 없으면 '—').
+  const stat = document.getElementById('stat-accuracy');
+  if (stat) {
+    if (hasResults) {
+      const last = skills[skills.length - 1];
+      const pct = Math.max(0, Math.min(100, Number(last.percentage) || 0));
+      stat.textContent = `${pct}%`;
+    } else {
+      stat.textContent = '—';
+    }
+  }
 }
 
 function renderError(query, message) {
@@ -80,11 +91,10 @@ async function runQuery(query) {
     const data = await recommend(trimmed);
     renderResults(trimmed, data.skills || []);
   } catch (err) {
+    // BE 가 INVALID_QUERY 등 도메인 코드를 정의하지 않아 일반 ApiError 분기로 흡수.
     if (err instanceof NetworkError) {
       showNetBanner('백엔드 서버가 응답하지 않습니다 (http://localhost:8080)');
       renderError(trimmed, '백엔드 서버에 연결할 수 없습니다.');
-    } else if (err instanceof ApiError && err.code === 'INVALID_QUERY') {
-      renderError(trimmed, '쿼리가 비어 있거나 유효하지 않습니다.');
     } else if (err instanceof ApiError) {
       renderError(trimmed, `매칭에 실패했습니다 (${err.code}: ${err.message})`);
     } else {

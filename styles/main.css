@@ -36,8 +36,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0
 .logo-dot{width:10px;height:10px;background:var(--accent);border-radius:2px}
 .nav-links{display:flex;gap:28px;font-size:13px;color:var(--fg-2)}
 .nav-links a:hover{color:var(--fg)}
-.nav-cta{display:flex;align-items:center;gap:10px;font-size:13px;font-family:'JetBrains Mono',monospace;padding:8px 14px;border:1px solid var(--line-2);border-radius:var(--r);transition:all .15s}
-.nav-cta:hover{border-color:var(--accent);color:var(--accent)}
 
 /* hero */
 .hero{padding:96px 0 60px;border-bottom:1px solid var(--line)}
@@ -74,7 +72,7 @@ section{padding:80px 0;border-bottom:1px solid var(--line)}
 .chip:hover{color:var(--fg);border-color:#3a3a3a}
 .chip.active{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .skill{background:var(--bg);padding:22px;display:flex;flex-direction:column;gap:14px;transition:background .15s;cursor:pointer;position:relative}
 .skill:hover{background:var(--bg-1)}
 .skill::after{content:"→";position:absolute;top:22px;right:22px;color:var(--fg-3);font-size:14px;transition:all .15s}
@@ -84,6 +82,9 @@ section{padding:80px 0;border-bottom:1px solid var(--line)}
 .skill-name{font-size:16px;font-weight:500;letter-spacing:-.01em;padding-right:24px}
 .skill-desc{font-size:13px;color:var(--fg-2);line-height:1.55;flex:1}
 .skill-foot{display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-3);padding-top:10px;border-top:1px dashed var(--line-2);gap:8px;flex-wrap:wrap}
+
+/* skill-grid 빈 칸 placeholder (3열 고정 시 마지막 줄 채움) */
+.skill-placeholder{background:var(--bg)}
 
 /* status pill */
 .status-pill{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:.06em;border:1px solid transparent}
@@ -169,6 +170,7 @@ footer{padding:60px 0 80px;color:var(--fg-3);font-family:'JetBrains Mono',monosp
   .hero{padding:60px 0 40px}
   section{padding:56px 0}
   .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr}
   .nav-links{display:none}
   .foot-grid{grid-template-columns:1fr 1fr;gap:24px}
   .modal{padding:0}

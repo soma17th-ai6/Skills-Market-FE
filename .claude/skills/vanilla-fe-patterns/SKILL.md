@@ -54,20 +54,21 @@ try {
 - console.error 프리픽스는 `[모듈명]` (예: `[discover]`, `[skill-detail]`, `[ask-ai]`).
 
 ## 5. 카테고리 enum
-백엔드 contract 의 enum 케이싱을 그대로 보존한다.
+백엔드 contract: 모든 enum 값이 UPPER_SNAKE (BE 실제 명세 정렬, 2026-05-09).
 
 | UI 라벨 | data-cat / 백엔드 enum |
 |---|---|
-| All | `all` (UI only, 미전송) |
 | Spring Boot | `SPRING_BOOT` |
 | Frontend / React | `REACT` |
-| DevOps | `DevOps` |
-| Data | `Data` |
+| DevOps | `DEVOPS` |
+| Data | `DATA` |
 | ETC | `ETC` |
 
-- UPPER_SNAKE 와 PascalCase 가 혼재 — **정규화하지 말 것**.
-- `getSkills(category)` 는 `null` / `'all'` / `'ALL'` 을 미전송으로 처리.
-- view 마다 `CATEGORY_LABEL` 객체가 중복 정의되어 있다 — 새 카테고리 추가 시 모든 view 의 객체를 동시에 갱신해야 한다 (또는 lib 로 추출하는 리팩토링을 architect 가 결정).
+- BE `SkillCategory.java` 가 진실의 원천 (Java enum, 대소문자 구분).
+- BE 가 `@RequestParam SkillCategory category` 를 필수로 요구 (required=true). All 칩은 미지원.
+- `getSkills(category)` 는 항상 카테고리를 전달한다 (이전의 `null/'all'/'ALL'` 분기는 제거됨).
+- view 마다 `CATEGORY_LABEL` 객체가 중복 정의되어 있다 (discover.js + skill-detail.js, 2곳). 3곳 도달 시 lib 추출 검토.
+- BE 가 required=false 로 변경되면 All 칩 부활 가능 — 그 시점에 본 §5 + index.html 갱신.
 
 ## 6. 카드/버튼 접근성
 클릭 가능한 모든 요소에 키보드 접근성을 부여한다.

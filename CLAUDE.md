@@ -84,4 +84,5 @@
 | 2026-05-08 | 안전 함수 단위 테스트 통합 | patterns §16 / qa-checklist #14 / implementer / reviewer / orchestrator | XSS 회귀 차단을 reviewer 정적 점검에만 의존하지 않기 위해 node:test 도입 |
 | 2026-05-08 | CI + smoke 테스트 추가, npm test 표기 통일 | .github/workflows/test.yml / tests/smoke.test.js / patterns §16 / 관련 5개 파일 | 머지 전 자동 검증 + 한글 경로에서 `node --test tests/` 가 모듈 해석 실패하는 이슈 회피 |
 | 2026-05-08 | 로컬 절대 경로 / 학습 컨텍스트 표기 제거 | CLAUDE.md / 하네스 4개 파일 | repo 공개 시 개인정보(성씨) 노출 + 다른 머신 이식 불가 — reference 경로는 세션 시작 시 사용자가 전달하는 방식으로 변경 |
+| 2026-05-09 | BE API 명세 정렬 (FE 측 수정) | config / client / index.html / 3개 view / main.js / client.test / patterns §5 / qa-checklist #5 | 통합 시도 후 발견된 7개 차이를 FE 에서 흡수: `/api` prefix 제거, recommend 단수, enum UPPER_SNAKE, All 칩 잠정 제거, 404/INVALID_QUERY 분기 흡수, statusPill 조건부. CORS 만 BE 작업 잔존 |
 
