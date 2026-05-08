@@ -36,8 +36,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0
 .logo-dot{width:10px;height:10px;background:var(--accent);border-radius:2px}
 .nav-links{display:flex;gap:28px;font-size:13px;color:var(--fg-2)}
 .nav-links a:hover{color:var(--fg)}
-.nav-cta{display:flex;align-items:center;gap:10px;font-size:13px;font-family:'JetBrains Mono',monospace;padding:8px 14px;border:1px solid var(--line-2);border-radius:var(--r);transition:all .15s}
-.nav-cta:hover{border-color:var(--accent);color:var(--accent)}
 
 /* hero */
 .hero{padding:96px 0 60px;border-bottom:1px solid var(--line)}
