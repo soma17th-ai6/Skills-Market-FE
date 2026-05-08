@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Skills Market — AI 자동화 스킬 마켓</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- 백엔드 미기동/네트워크 실패 알림 배너 -->
+<div id="net-banner" class="net-banner" hidden>
+  <span class="net-banner-text"></span>
+  <button type="button" class="net-banner-close" aria-label="닫기">×</button>
+</div>
+
+<div class="wrap">
+
+  <nav>
+    <div class="logo">
+      <div class="logo-dot"></div>
+      <span>skills.market</span>
+    </div>
+    <div class="nav-links">
+      <a href="#discover">Discover</a>
+      <a href="#intent">Ask AI</a>
+      <a href="#docs">Docs</a>
+    </div>
+    <a href="#" class="nav-cta">
+      <span>Open app</span>
+      <span class="arrow">↗</span>
+    </a>
+  </nav>
+
+  <header class="hero">
+    <div class="badge"><span class="pulse"></span><span>v0.1 · public beta</span></div>
+    <h1>개발자를 위한<br/>AI 자동화 <em>스킬 마켓.</em></h1>
+    <p class="hero-sub">
+      반복 작업을 대신할 Claude Skill을 발견하고, 자연어로 의도를 적으면 RAG가 가장 가까운 스킬을 추천합니다.
+      검색이 아니라, 행동을 대신 수행하는 마켓플레이스.
+    </p>
+    <div class="hero-cta">
+      <a href="#discover" class="btn btn-primary"><span>스킬 둘러보기</span><span class="arrow">→</span></a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num" id="stat-total">—</div><div class="stat-label">published skills</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">tech stacks</div></div>
+      <div class="stat"><div class="stat-num">RAG</div><div class="stat-label">match engine</div></div>
+      <div class="stat"><div class="stat-num">98.4%</div><div class="stat-label">match accuracy</div></div>
+    </div>
+  </header>
+
+  <section id="discover">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag">01 / Discover</div>
+        <h2 class="sec-title">테크 카테고리별, 정확한 스킬 추천.</h2>
+      </div>
+      <p class="sec-desc">사용 중인 스택을 고르면 그에 맞는 스킬만 골라 보여줍니다. Spring Boot 로깅부터 React 접근성 점검까지.</p>
+    </div>
+
+    <div class="chips" role="tablist" id="category-chips">
+      <button class="chip active" data-cat="all" role="tab" aria-selected="true">All</button>
+      <button class="chip" data-cat="SPRING_BOOT" role="tab" aria-selected="false">Spring Boot</button>
+      <button class="chip" data-cat="REACT" role="tab" aria-selected="false">Frontend / React</button>
+      <button class="chip" data-cat="DevOps" role="tab" aria-selected="false">DevOps</button>
+      <button class="chip" data-cat="Data" role="tab" aria-selected="false">Data</button>
+      <button class="chip" data-cat="ETC" role="tab" aria-selected="false">ETC</button>
+    </div>
+
+    <div class="grid" id="skill-grid"></div>
+    <div class="empty-state" id="skill-grid-empty" hidden></div>
+  </section>
+
+  <section id="intent">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag">02 / Ask AI</div>
+        <h2 class="sec-title">의도를 적으면, RAG가 매칭한다.</h2>
+      </div>
+      <p class="sec-desc">자연어로 자동화하고 싶은 흐름을 적으면 가장 가까운 스킬 셋을 추천합니다. 매칭 점수와 근거까지.</p>
+    </div>
+
+    <div class="intent-box">
+      <div class="intent-input-wrap">
+        <span class="intent-prompt">$</span>
+        <textarea id="intent-input" class="intent-input has-prompt" placeholder="자동화하고 싶은 작업을 자연어로 적어보세요..."></textarea>
+      </div>
+      <div class="intent-row">
+        <div class="intent-presets">
+          <button class="chip" data-intent="CI 실패 로그를 분석해 stacktrace만 뽑고 슬랙으로 요약 알림 보내기">CI failure → Slack</button>
+          <button class="chip" data-intent="PR diff에서 보안 이슈와 컨벤션 위반을 자동으로 코멘트">PR auto-review</button>
+          <button class="chip" data-intent="Spring Boot 앱에 구조화 로깅과 trace ID 자동 적용">Spring tracing</button>
+        </div>
+        <button id="intent-go" class="btn btn-primary"><span>match skills</span><span class="arrow">→</span></button>
+      </div>
+      <div id="intent-results" class="intent-results"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="logo" style="margin-bottom:14px">
+          <div class="logo-dot"></div>
+          <span>skills.market</span>
+        </div>
+        <p style="max-width:32ch;line-height:1.6;color:var(--fg-3)">
+          개발자의 모든 반복 작업을 자동화하는 AI 스킬 마켓.<br/>
+          Built on Claude Skills.
+        </p>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="#discover">Discover</a>
+        <a href="#intent">Ask AI</a>
+      </div>
+      <div class="foot-col">
+        <h4>Build</h4>
+        <a href="#">CLI</a>
+        <a href="#">SKILL.md spec</a>
+        <a href="#">Publish guide</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Changelog</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 skills.market — all systems operational</span>
+      <span><span style="color:var(--ok)">●</span> sync 14ms</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Skill Detail Modal -->
+<div id="skill-modal" class="modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-backdrop" data-close></div>
+  <article class="modal-panel">
+    <button type="button" class="modal-close" data-close aria-label="닫기">×</button>
+    <div id="modal-content"></div>
+  </article>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
