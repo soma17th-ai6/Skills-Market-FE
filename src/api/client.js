@@ -1,11 +1,12 @@
 // fetch 래퍼. 3개 엔드포인트만 노출한다.
 //
-// 응답 shape (architect contract v1.0):
-//   GET /api/skills?category=...        → { skills: SkillSummaryDto[] }
-//   GET /api/skills/{id}                → SkillDetailDto
-//   GET /api/skills/recommendations?... → { skills: SkillRecommendationDto[] }
+// BE 실제 명세 (architect contract v2 — 2026-05-09 정렬):
+//   GET /skills?category=...        → { skills: [{ id, title, description }] }
+//   GET /skills/{id}                → { id, title, description, category, content }
+//   GET /skills/recommendation?...  → { skills: [{ id, title, description, percentage }] }
 //
-// 에러 응답: { code: 'UPPER_SNAKE', message: '...' } + 4xx/5xx HTTP 상태.
+// 에러 응답: Spring 기본 형태 ({ timestamp, status, error, message, path }).
+// FE 는 `payload.code` fallback 으로 'UNKNOWN' 처리.
 
 import { API_BASE } from '../config.js';
 
@@ -55,12 +56,9 @@ async function request(path) {
   return res.json();
 }
 
-// 카테고리는 architect contract 의 enum 값(`SPRING_BOOT` / `REACT` / `DevOps` /
-// `Data` / `ETC`) 그대로 전달한다. null / 'all' 은 파라미터 미전송.
+// BE 는 category 를 필수로 요구한다 (@RequestParam SkillCategory category).
+// All 칩은 FE 에서 제거됨. enum 은 모두 UPPER_SNAKE.
 export function getSkills(category) {
-  if (!category || category === 'all' || category === 'ALL') {
-    return request('/skills');
-  }
   return request(`/skills?category=${encodeURIComponent(category)}`);
 }
 
@@ -68,6 +66,7 @@ export function getSkill(id) {
   return request(`/skills/${encodeURIComponent(id)}`);
 }
 
+// BE 경로는 단수 `/recommendation`. topK 는 BE 기본값 3 사용 (미전송).
 export function recommend(query) {
-  return request(`/skills/recommendations?query=${encodeURIComponent(query)}`);
+  return request(`/skills/recommendation?query=${encodeURIComponent(query)}`);
 }

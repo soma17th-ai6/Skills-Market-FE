@@ -15,7 +15,8 @@ function boot() {
   bindAskAi();
   bindModalDismiss();
   attachReveal($$('section, .hero'));
-  loadCategory('all');
+  // BE 가 category 를 필수로 요구하므로 첫 칩(Spring Boot) 을 기본 활성화.
+  loadCategory('SPRING_BOOT');
 }
 
 if (document.readyState === 'loading') {

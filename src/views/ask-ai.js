@@ -80,11 +80,10 @@ async function runQuery(query) {
     const data = await recommend(trimmed);
     renderResults(trimmed, data.skills || []);
   } catch (err) {
+    // BE 가 INVALID_QUERY 등 도메인 코드를 정의하지 않아 일반 ApiError 분기로 흡수.
     if (err instanceof NetworkError) {
       showNetBanner('백엔드 서버가 응답하지 않습니다 (http://localhost:8080)');
       renderError(trimmed, '백엔드 서버에 연결할 수 없습니다.');
-    } else if (err instanceof ApiError && err.code === 'INVALID_QUERY') {
-      renderError(trimmed, '쿼리가 비어 있거나 유효하지 않습니다.');
     } else if (err instanceof ApiError) {
       renderError(trimmed, `매칭에 실패했습니다 (${err.code}: ${err.message})`);
     } else {

@@ -1,15 +1,13 @@
 // Discover 뷰: 카테고리 칩 + 카드 그리드.
 //
-// 카테고리 칩 ↔ 백엔드 enum 매핑 (architect contract §9):
-//   "All"              → null            (쿼리 파라미터 미전송)
+// 카테고리 칩 ↔ 백엔드 enum 매핑 (BE 실제 명세, 2026-05-09 정렬):
 //   "Spring Boot"      → "SPRING_BOOT"
 //   "Frontend / React" → "REACT"
-//   "DevOps"           → "DevOps"
-//   "Data"             → "Data"
+//   "DevOps"           → "DEVOPS"
+//   "Data"             → "DATA"
 //   "ETC"              → "ETC"
 //
-// HTML 의 `data-cat` 값에 위 enum 문자열이 그대로 들어 있고 ('all' 만 예외),
-// api/client.js 의 `getSkills` 가 null/'all' 을 알아서 처리한다.
+// BE 가 category 를 필수로 요구하므로 All 칩은 제거됨. 모든 enum 은 UPPER_SNAKE.
 
 import { getSkills, ApiError, NetworkError } from '../api/client.js';
 import { escapeHtml, $, $$, showNetBanner } from '../lib/ui.js';
@@ -19,14 +17,16 @@ import { openSkillDetail } from './skill-detail.js';
 const CATEGORY_LABEL = {
   SPRING_BOOT: 'Spring Boot',
   REACT: 'React',
-  DevOps: 'DevOps',
-  Data: 'Data',
+  DEVOPS: 'DevOps',
+  DATA: 'Data',
   ETC: 'ETC',
 };
 
+// status 가 응답에 없으면 빈 문자열 — BE 가 status 필드 추가하면 자동으로 다시 표시됨.
 function statusPill(status) {
+  if (!status) return '';
   const cls = status === 'DONE' ? 'status-done' : 'status-progress';
-  return `<span class="status-pill ${cls}">${escapeHtml(status || '')}</span>`;
+  return `<span class="status-pill ${cls}">${escapeHtml(status)}</span>`;
 }
 
 function renderCard(skill) {
@@ -37,7 +37,7 @@ function renderCard(skill) {
 
   const categoryLabel = CATEGORY_LABEL[skill.category] || skill.category || '';
 
-  // skill-foot 에 카테고리 라벨 + 태그 갯수 표시. runs/stars/author 는 계약상 없음.
+  // skill-foot 에 카테고리 라벨 + 태그 갯수 표시.
   const tagCount = (skill.tags || []).length;
   return `
     <div class="skill" data-id="${escapeHtml(skill.id)}" tabindex="0" role="button" aria-label="${escapeHtml(skill.title)} 상세 보기">
@@ -92,10 +92,6 @@ export async function loadCategory(category) {
   try {
     const data = await getSkills(category);
     renderSkills(data.skills || []);
-    if (category === 'all') {
-      const stat = document.getElementById('stat-total');
-      if (stat) stat.textContent = String((data.skills || []).length);
-    }
   } catch (err) {
     if (err instanceof NetworkError) {
       showNetBanner(
