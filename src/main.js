@@ -1,14 +1,20 @@
-// 부트스트랩 (스텁 단계).
+// 부트스트랩.
 //
-// 현재는 view 파일이 없어 view 바인딩과 초기 데이터 로드는 생략.
-// 후속 작업에서 discover / ask-ai / skill-detail view 가 추가될 때
-// 여기에 import + bind*() 호출을 누적한다.
+// 1. 카테고리 칩 + 카드 그리드 + 카드 클릭 핸들러 등록 (discover)
+// 2. 모달 닫기 + 네트워크 배너 닫기
+// 3. IntersectionObserver 진입 애니메이션
+// 4. 초기 로드: All 카테고리 스킬 목록
+//
+// Ask AI view 는 후속 작업에서 추가.
 
+import { bindDiscover, loadCategory } from './views/discover.js';
 import { bindModalDismiss, attachReveal, $$ } from './lib/ui.js';
 
 function boot() {
+  bindDiscover();
   bindModalDismiss();
   attachReveal($$('section, .hero'));
+  loadCategory('all');
 }
 
 if (document.readyState === 'loading') {
