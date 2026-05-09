@@ -119,6 +119,54 @@ section{padding:80px 0;border-bottom:1px solid var(--line)}
 .score-fill{height:100%;background:var(--accent)}
 .intent-empty{padding:18px;color:var(--fg-3);font-family:'JetBrains Mono',monospace;font-size:13px;text-align:center;border:1px dashed var(--line-2);border-radius:var(--r)}
 
+/* create-skill */
+.create-skill-validation-msg{padding:8px 14px;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--warn);border:1px dashed rgba(255,107,61,.35);border-radius:var(--r);background:rgba(255,107,61,.06)}
+.create-skill-error-msg{padding:14px;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--warn);border:1px solid rgba(255,107,61,.35);border-radius:var(--r);background:rgba(255,107,61,.06)}
+.create-skill-success-msg{padding:14px;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ok);border:1px solid rgba(74,222,128,.35);border-radius:var(--r);background:rgba(74,222,128,.06)}
+.create-skill-check{font-size:14px}
+.create-skill-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(10,10,10,.3);border-top-color:#0a0a0a;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#create-skill-go:disabled{opacity:.55;cursor:not-allowed}
+
+/* progress view */
+.progress-header{margin-bottom:28px}
+.progress-title{font-size:18px;font-weight:500;letter-spacing:-.01em;margin-bottom:6px}
+.progress-subtitle{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--fg-2)}
+.progress-steps{display:flex;align-items:center;gap:0;padding:24px 0;flex-wrap:wrap;justify-content:center}
+.progress-step{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:80px;position:relative}
+.progress-step-indicator{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;border:2px solid var(--line-2);color:var(--fg-3);background:var(--bg);transition:all .3s}
+.progress-step-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--fg-3);text-align:center;transition:color .3s}
+.progress-step-line{width:32px;height:2px;background:var(--line-2);margin-bottom:24px;transition:background .3s}
+
+/* step states */
+.progress-step.done .progress-step-indicator{border-color:var(--ok);background:rgba(74,222,128,.15);color:var(--ok)}
+.progress-step.done .progress-step-label{color:var(--ok)}
+.progress-step.done + .progress-step-line{background:var(--ok)}
+
+.progress-step.active .progress-step-indicator{border-color:var(--accent);background:rgba(212,255,58,.1);color:var(--accent)}
+.progress-step.active .progress-step-label{color:var(--accent)}
+
+.progress-step.failed .progress-step-indicator{border-color:var(--warn);background:rgba(255,107,61,.12);color:var(--warn)}
+.progress-step.failed .progress-step-label{color:var(--warn)}
+
+.progress-spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(212,255,58,.3);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+
+.progress-error-box{padding:18px;margin-top:18px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--warn);border:1px solid rgba(255,107,61,.35);border-radius:var(--r);background:rgba(255,107,61,.06)}
+
+.progress-complete-msg{padding:18px;margin-top:18px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ok);border:1px solid rgba(74,222,128,.35);border-radius:var(--r);background:rgba(74,222,128,.06)}
+
+.progress-result-wrap{margin-top:18px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--bg)}
+.progress-result-toolbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.progress-result-title{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-2);text-transform:uppercase;letter-spacing:.06em}
+.progress-copy-btn{padding:6px 14px;font-size:12px}
+.progress-result-content{padding:24px 28px;max-height:480px;overflow:auto}
+
+.progress-actions{margin-top:18px;display:flex;justify-content:center;gap:12px}
+
+/* toast */
+.ui-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--accent);color:#0a0a0a;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;padding:12px 24px;border-radius:var(--r);z-index:200;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.ui-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
 /* footer */
 footer{padding:60px 0 80px;color:var(--fg-3);font-family:'JetBrains Mono',monospace;font-size:12px}
 .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:48px}
@@ -150,12 +198,15 @@ footer{padding:60px 0 80px;color:var(--fg-3);font-family:'JetBrains Mono',monosp
 .modal-title{font-size:24px;font-weight:500;letter-spacing:-.02em;line-height:1.2;padding-right:36px}
 .modal-desc{margin-top:10px;color:var(--fg-2);font-size:14px;line-height:1.6}
 .modal-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
-.modal-body{padding:24px 28px 28px 30px;overflow:auto;flex:1}
+.modal-content-toolbar{display:flex;justify-content:flex-end;margin-bottom:12px}
+#modal-content{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.modal-body{padding:24px 28px 28px 30px;overflow-y:auto;flex:1;min-height:0}
 .modal-content{font-size:14px;color:var(--fg);line-height:1.7}
-.modal-content h1,.modal-content h2,.modal-content h3{font-weight:500;letter-spacing:-.01em;margin:18px 0 10px}
-.modal-content h1{font-size:20px}
-.modal-content h2{font-size:17px}
-.modal-content h3{font-size:15px;color:var(--fg-2)}
+.modal-content h1,.modal-content h2,.modal-content h3{letter-spacing:-.01em}
+.modal-content h1{font-size:22px;font-weight:600;margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.modal-content h1:first-child{margin-top:0}
+.modal-content h2{font-size:17px;font-weight:600;margin:24px 0 10px;color:var(--fg)}
+.modal-content h3{font-size:15px;font-weight:500;margin:18px 0 8px;color:var(--fg-2)}
 .modal-content ul{margin:8px 0 12px 20px}
 .modal-content li{margin:4px 0;color:var(--fg-2)}
 .modal-content p{margin:8px 0;color:var(--fg-2)}

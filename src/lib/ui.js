@@ -91,6 +91,30 @@ export function closeModal() {
   }
 }
 
+// 토스트 메시지 표시 (자동 소멸)
+export function showToast(message, durationMs = 2500) {
+  // 기존 토스트 제거
+  const prev = document.getElementById('ui-toast');
+  if (prev) prev.remove();
+
+  const toast = document.createElement('div');
+  toast.id = 'ui-toast';
+  toast.className = 'ui-toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  // 강제 reflow 후 show 클래스 추가 (애니메이션)
+  void toast.offsetWidth;
+  toast.classList.add('show');
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+    toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+    // fallback: transitionend 미발생 시 직접 제거
+    setTimeout(() => { if (toast.parentNode) toast.remove(); }, 400);
+  }, durationMs);
+}
+
 export function bindModalDismiss() {
   const modal = document.getElementById('skill-modal');
   if (!modal) return;
