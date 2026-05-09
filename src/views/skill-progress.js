@@ -114,6 +114,10 @@ function connectSSE(requestId) {
     }
     startPolling(requestId);
   };
+
+  // SSE emitter는 파이프라인 시작 후에 생성되므로 초기 이벤트가 유실될 수 있다.
+  // SSE와 폴링을 병행하여 놓친 상태 변경을 보완한다.
+  startPolling(requestId);
 }
 
 // ── Polling fallback ──
