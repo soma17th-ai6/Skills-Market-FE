@@ -9,7 +9,7 @@
 // 거친다. 백드롭 / ESC / X 버튼으로 닫힘.
 
 import { getSkill, ApiError, NetworkError } from '../api/client.js';
-import { escapeHtml, openModal, showNetBanner } from '../lib/ui.js';
+import { escapeHtml, openModal, showNetBanner, showToast } from '../lib/ui.js';
 import { renderMarkdown } from '../lib/markdown.js';
 
 const CATEGORY_LABEL = {
@@ -48,6 +48,7 @@ function renderDetailBody(skill) {
       ${tagsHtml ? `<div class="modal-tags">${tagsHtml}</div>` : ''}
     </header>
     <div class="modal-body">
+      ${skill.content ? '<div class="modal-content-toolbar"><button type="button" class="btn progress-copy-btn" id="detail-copy-btn"><span>copy</span></button></div>' : ''}
       <div class="modal-content">${contentHtml}</div>
     </div>
   `;
@@ -78,6 +79,17 @@ export async function openSkillDetail(id) {
   try {
     const skill = await getSkill(id);
     openModal(renderDetailBody(skill));
+
+    // content 복사 버튼 바인딩
+    const copyBtn = document.getElementById('detail-copy-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(skill.content).then(
+          () => showToast('클립보드에 복사되었습니다!'),
+          () => showToast('복사에 실패했습니다. 수동으로 복사해 주세요.'),
+        );
+      });
+    }
   } catch (err) {
     // BE 가 IllegalArgumentException 을 매핑하지 않아 404 가 500 으로 떨어짐 →
     // 별도 404 분기 없이 일반 ApiError 분기로 흡수.

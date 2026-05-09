@@ -198,12 +198,15 @@ footer{padding:60px 0 80px;color:var(--fg-3);font-family:'JetBrains Mono',monosp
 .modal-title{font-size:24px;font-weight:500;letter-spacing:-.02em;line-height:1.2;padding-right:36px}
 .modal-desc{margin-top:10px;color:var(--fg-2);font-size:14px;line-height:1.6}
 .modal-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
-.modal-body{padding:24px 28px 28px 30px;overflow:auto;flex:1}
+.modal-content-toolbar{display:flex;justify-content:flex-end;margin-bottom:12px}
+#modal-content{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.modal-body{padding:24px 28px 28px 30px;overflow-y:auto;flex:1;min-height:0}
 .modal-content{font-size:14px;color:var(--fg);line-height:1.7}
-.modal-content h1,.modal-content h2,.modal-content h3{font-weight:500;letter-spacing:-.01em;margin:18px 0 10px}
-.modal-content h1{font-size:20px}
-.modal-content h2{font-size:17px}
-.modal-content h3{font-size:15px;color:var(--fg-2)}
+.modal-content h1,.modal-content h2,.modal-content h3{letter-spacing:-.01em}
+.modal-content h1{font-size:22px;font-weight:600;margin:28px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.modal-content h1:first-child{margin-top:0}
+.modal-content h2{font-size:17px;font-weight:600;margin:24px 0 10px;color:var(--fg)}
+.modal-content h3{font-size:15px;font-weight:500;margin:18px 0 8px;color:var(--fg-2)}
 .modal-content ul{margin:8px 0 12px 20px}
 .modal-content li{margin:4px 0;color:var(--fg-2)}
 .modal-content p{margin:8px 0;color:var(--fg-2)}
