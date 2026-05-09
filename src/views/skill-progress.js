@@ -9,7 +9,8 @@
 
 import { API_BASE } from '../config.js';
 import { getGenerationStatus, NetworkError } from '../api/client.js';
-import { $, showNetBanner } from '../lib/ui.js';
+import { $, showNetBanner, showToast } from '../lib/ui.js';
+import { renderMarkdown } from '../lib/markdown.js';
 
 const STEPS = ['PENDING', 'CLARIFYING', 'GENERATING', 'REVIEWING', 'REFINING', 'COMPLETED'];
 
@@ -258,12 +259,37 @@ function showProgressResult(data) {
   const el = $('#progress-result');
   if (!el) return;
   el.hidden = false;
-  // 결과 표시는 US-010 에서 구현. 여기서는 완료 메시지만 표시.
+
+  const rawMarkdown = data.finalSkillContent || '';
+
+  // 완료 메시지 + 복사 버튼 + 마크다운 렌더링 결과
   el.innerHTML =
     '<div class="progress-complete-msg">' +
-    '<span class="create-skill-check">&#10003;</span> ' +
-    '스킬 생성이 완료되었습니다.' +
+      '<span class="create-skill-check">&#10003;</span> ' +
+      '스킬 생성이 완료되었습니다.' +
+    '</div>' +
+    '<div class="progress-result-wrap">' +
+      '<div class="progress-result-toolbar">' +
+        '<span class="progress-result-title">Generated Skill</span>' +
+        '<button type="button" class="btn progress-copy-btn" id="progress-copy-btn">' +
+          '<span>copy</span>' +
+        '</button>' +
+      '</div>' +
+      '<div class="progress-result-content modal-content">' +
+        renderMarkdown(rawMarkdown) +
+      '</div>' +
     '</div>';
+
+  // 복사 버튼 바인딩
+  const copyBtn = $('#progress-copy-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(rawMarkdown).then(
+        () => showToast('클립보드에 복사되었습니다!'),
+        () => showToast('복사에 실패했습니다. 수동으로 복사해 주세요.')
+      );
+    });
+  }
 }
 
 function hideProgressResult() {
