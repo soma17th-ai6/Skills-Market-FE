@@ -107,22 +107,83 @@
       <p class="sec-desc">자동화하고 싶은 작업을 자연어로 설명하면, AI가 Claude Skill을 생성합니다.</p>
     </div>
 
-    <div class="intent-box">
-      <div class="intent-input-wrap">
-        <span class="intent-prompt">$</span>
-        <textarea id="create-skill-input" class="intent-input has-prompt" placeholder="어떤 스킬을 만들고 싶은지 자유롭게 설명해 주세요..."></textarea>
+    <!-- 폼 영역 -->
+    <div id="create-skill-form-wrap">
+      <div class="intent-box">
+        <div class="intent-input-wrap">
+          <span class="intent-prompt">$</span>
+          <textarea id="create-skill-input" class="intent-input has-prompt" placeholder="어떤 스킬을 만들고 싶은지 자유롭게 설명해 주세요..."></textarea>
+        </div>
+        <div class="create-skill-validation-msg" id="create-skill-validation" hidden></div>
+        <div class="intent-row">
+          <div></div>
+          <button id="create-skill-go" class="btn btn-primary">
+            <span id="create-skill-spinner" class="create-skill-spinner" hidden></span>
+            <span>generate skill</span>
+            <span class="arrow">&rarr;</span>
+          </button>
+        </div>
+        <div class="create-skill-error-msg" id="create-skill-error" hidden></div>
+        <div class="create-skill-success-msg" id="create-skill-success" hidden></div>
       </div>
-      <div class="create-skill-validation-msg" id="create-skill-validation" hidden></div>
-      <div class="intent-row">
-        <div></div>
-        <button id="create-skill-go" class="btn btn-primary">
-          <span id="create-skill-spinner" class="create-skill-spinner" hidden></span>
-          <span>generate skill</span>
-          <span class="arrow">&rarr;</span>
-        </button>
+    </div>
+
+    <!-- 진행 상태 영역 -->
+    <div id="skill-progress-wrap" hidden>
+      <div class="intent-box">
+        <div class="progress-header">
+          <h3 class="progress-title">스킬 생성 진행 상태</h3>
+          <p class="progress-subtitle" id="progress-status-text">처리 중...</p>
+        </div>
+
+        <div class="progress-steps">
+          <div class="progress-step pending" id="progress-step-PENDING">
+            <div class="progress-step-indicator">1</div>
+            <div class="progress-step-label">요청 대기</div>
+          </div>
+          <div class="progress-step-line"></div>
+          <div class="progress-step pending" id="progress-step-CLARIFYING">
+            <div class="progress-step-indicator">2</div>
+            <div class="progress-step-label">요구사항 분석</div>
+          </div>
+          <div class="progress-step-line"></div>
+          <div class="progress-step pending" id="progress-step-GENERATING">
+            <div class="progress-step-indicator">3</div>
+            <div class="progress-step-label">스킬 생성</div>
+          </div>
+          <div class="progress-step-line"></div>
+          <div class="progress-step pending" id="progress-step-REVIEWING">
+            <div class="progress-step-indicator">4</div>
+            <div class="progress-step-label">품질 리뷰</div>
+          </div>
+          <div class="progress-step-line"></div>
+          <div class="progress-step pending" id="progress-step-REFINING">
+            <div class="progress-step-indicator">5</div>
+            <div class="progress-step-label">최종 수정</div>
+          </div>
+          <div class="progress-step-line"></div>
+          <div class="progress-step pending" id="progress-step-COMPLETED">
+            <div class="progress-step-indicator">6</div>
+            <div class="progress-step-label">완료</div>
+          </div>
+        </div>
+
+        <!-- 에러 상태 -->
+        <div id="progress-error" class="progress-error-box" hidden>
+          <p>스킬 생성 중 오류가 발생했습니다. 다시 시도해 주세요.</p>
+          <button id="progress-retry-btn" class="btn btn-primary" style="margin-top:12px">
+            <span>다시 시도</span><span class="arrow">&rarr;</span>
+          </button>
+        </div>
+
+        <!-- 완료 결과 -->
+        <div id="progress-result" hidden></div>
+
+        <!-- 새 스킬 만들기 -->
+        <div class="progress-actions">
+          <button id="progress-new-btn" class="btn"><span>새 스킬 만들기</span></button>
+        </div>
       </div>
-      <div class="create-skill-error-msg" id="create-skill-error" hidden></div>
-      <div class="create-skill-success-msg" id="create-skill-success" hidden></div>
     </div>
   </section>
 

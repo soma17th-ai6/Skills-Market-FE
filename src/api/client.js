@@ -82,3 +82,8 @@ export function generateSkill(userPrompt) {
     body: { userPrompt },
   });
 }
+
+// GET /skills/generate/{requestId} → { requestId, status, finalSkillContent? }
+export function getGenerationStatus(requestId) {
+  return request(`/skills/generate/${encodeURIComponent(requestId)}`);
+}

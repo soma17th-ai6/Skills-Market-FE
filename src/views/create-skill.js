@@ -10,6 +10,7 @@
 
 import { generateSkill, ApiError, NetworkError } from '../api/client.js';
 import { escapeHtml, $, showNetBanner } from '../lib/ui.js';
+import { showProgress } from './skill-progress.js';
 
 let submitting = false;
 
@@ -107,10 +108,11 @@ async function handleSubmit() {
       }
     }
 
-    showSuccess(requestId);
-
     // 입력 초기화
     if (input) input.value = '';
+
+    // 진행 상태 뷰로 전환
+    showProgress(requestId);
   } catch (err) {
     if (err instanceof NetworkError) {
       showNetBanner('백엔드 서버가 응답하지 않습니다 (http://localhost:8080)');
