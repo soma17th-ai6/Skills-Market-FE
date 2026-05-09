@@ -28,6 +28,7 @@
     <div class="nav-links">
       <a href="#discover">Discover</a>
       <a href="#intent">Ask AI</a>
+      <a href="#create-skill">Create</a>
     </div>
   </nav>
 
@@ -97,6 +98,34 @@
     </div>
   </section>
 
+  <section id="create-skill">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag">03 / Create Skill</div>
+        <h2 class="sec-title">원하는 스킬을 AI가 만들어 드립니다.</h2>
+      </div>
+      <p class="sec-desc">자동화하고 싶은 작업을 자연어로 설명하면, AI가 Claude Skill을 생성합니다.</p>
+    </div>
+
+    <div class="intent-box">
+      <div class="intent-input-wrap">
+        <span class="intent-prompt">$</span>
+        <textarea id="create-skill-input" class="intent-input has-prompt" placeholder="어떤 스킬을 만들고 싶은지 자유롭게 설명해 주세요..."></textarea>
+      </div>
+      <div class="create-skill-validation-msg" id="create-skill-validation" hidden></div>
+      <div class="intent-row">
+        <div></div>
+        <button id="create-skill-go" class="btn btn-primary">
+          <span id="create-skill-spinner" class="create-skill-spinner" hidden></span>
+          <span>generate skill</span>
+          <span class="arrow">&rarr;</span>
+        </button>
+      </div>
+      <div class="create-skill-error-msg" id="create-skill-error" hidden></div>
+      <div class="create-skill-success-msg" id="create-skill-success" hidden></div>
+    </div>
+  </section>
+
   <footer>
     <div class="foot-grid">
       <div class="foot-col">
@@ -113,6 +142,7 @@
         <h4>Product</h4>
         <a href="#discover">Discover</a>
         <a href="#intent">Ask AI</a>
+        <a href="#create-skill">Create</a>
       </div>
       <div class="foot-col">
         <h4>Build</h4>

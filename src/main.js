@@ -8,11 +8,13 @@
 
 import { bindDiscover, loadCategory } from './views/discover.js';
 import { bindAskAi } from './views/ask-ai.js';
+import { bindCreateSkill } from './views/create-skill.js';
 import { bindModalDismiss, attachReveal, $$ } from './lib/ui.js';
 
 function boot() {
   bindDiscover();
   bindAskAi();
+  bindCreateSkill();
   bindModalDismiss();
   attachReveal($$('section, .hero'));
   // hero stats 의 tech stacks 는 카테고리 칩 개수에서 자동 계산 (drift 방지).

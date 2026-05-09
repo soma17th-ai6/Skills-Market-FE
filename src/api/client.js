@@ -27,12 +27,16 @@ export class NetworkError extends Error {
   }
 }
 
-async function request(path) {
+async function request(path, options = {}) {
   let res;
   try {
     res = await fetch(`${API_BASE}${path}`, {
-      method: 'GET',
-      headers: { Accept: 'application/json' },
+      method: options.method || 'GET',
+      headers: {
+        Accept: 'application/json',
+        ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+      },
+      ...(options.body ? { body: JSON.stringify(options.body) } : {}),
     });
   } catch (err) {
     // CORS / DNS / connection refused 등은 fetch 자체에서 throw.
@@ -69,4 +73,12 @@ export function getSkill(id) {
 // BE 경로는 단수 `/recommendation`. topK 는 BE 기본값 3 사용 (미전송).
 export function recommend(query) {
   return request(`/skills/recommendation?query=${encodeURIComponent(query)}`);
+}
+
+// POST /skills/generate → 202 { requestId, status }
+export function generateSkill(userPrompt) {
+  return request('/skills/generate', {
+    method: 'POST',
+    body: { userPrompt },
+  });
 }
